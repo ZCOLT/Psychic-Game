@@ -35,22 +35,40 @@
 
     var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     var computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)]
-//not sure how to get the computer to choose something different when the user guesses correctly. 
+ 
     var wins = 0;
     var losses = 0;
     var guesses = 10;
     var wrongGuesses = [];
 
+function gameReset(){
+    wrongGuesses = [];
+    document.getElementById("guessesSoFar").innerHTML = "Your Guesses So Far: " + wrongGuesses;
+    guesses = 10;
+    document.getElementById("guessesLeft").innerHTML = "Guesses Left: " + guesses;
+    computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
+
+}
+
 document.onkeypress = function psychicGame (event){
 
     
     var userChoice = event.key;
+    userChoice = userChoice.toLowerCase();
+
+    if( alphabet.indexOf(userChoice) === -1 ){ 
+        alert("Please select a lower-case alphabetic character.");
+        return; 
+    }
+    
 
     if (userChoice === computerChoice) {
         wins++;   
         document.getElementById("winsNum").innerHTML = "Wins: " + wins;
         alert("You Guessed Correct!");
-        // cannot figure out how to get the game to reset without resetting the wins counter
+        gameReset();
+        alert("Play Again");
+       
     } else {
         guesses--;
         document.getElementById("guessesLeft").innerHTML = "Guesses Left: " + guesses;
@@ -61,16 +79,9 @@ document.onkeypress = function psychicGame (event){
         losses++;
         document.getElementById("lossesNum").innerHTML = "Losses: " + losses;
         alert("You Lose!");
-        // cannot figure out how to get the game to reset without resetting the losses counter
+        gameReset();
+        alert("Play Again");
+      
 
     }  
 };
-
-
-
-
-//user will press a key 
-//if it was right the wins go up
-    //if else statements
-//after 10 guesses the losses go up 
-//user looses a guess after every wrong guess
